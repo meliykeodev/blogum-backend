@@ -3,7 +3,7 @@ using blogum_core.enums;
 
 namespace blogum_db.dtos
 {
-    public class UserDto: BaseDto
+    public class UserDto : BaseDto
     {
         public UserDto()
         {
@@ -18,5 +18,7 @@ namespace blogum_db.dtos
         public string Email { get; set; }
 
         public string Password { get; set; }
+
+        public Ranks Rank { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace blogum_core.dtos
 
         public long UserId { get; set; }
 
-        public DateTime ExpiredDate { get; set; } = DateTime.Now;
+        public DateTime ExpiredDate { get; set; } = DateTime.Now.AddHours(12);
 
         public bool HasExpired => ExpiredDate < DateTime.Now;
     }

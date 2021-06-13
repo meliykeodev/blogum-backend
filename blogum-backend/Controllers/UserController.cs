@@ -34,9 +34,9 @@ namespace blogum_backend.Controllers
 
         [HttpPost]
         [Route("Signup")]
-        public async Task<UserDto> Signup([FromBody]UserDto user)
+        public async Task<UserDto> Signup([FromBody] UserDto user)
         {
-            user.Password = EncryptionHelper.Encrypt(user.Password);
+            user.Password = EncryptionHelper.MD5Hash(user.Password);
 
             var entity = AppMapper.Map<User>(user);
 
@@ -49,15 +49,15 @@ namespace blogum_backend.Controllers
 
         [HttpPost]
         [Route("Signin")]
-        public async Task<BaseResponse> Signin([FromBody]AuthenticationDto dto)
+        public async Task<BaseResponse> Signin([FromBody] AuthenticationDto dto)
         {
-            string hashedPassword = EncryptionHelper.Encrypt(dto.Password);
+            string hashedPassword = EncryptionHelper.MD5Hash(dto.Password);
 
-            var zz = AppMapper.Map<UserDto>(dto);
+            var users = await _userRepository.GetAllActive();
 
-            var result = (await _userRepository.GetAll(o => o.Email.ToLower() == zz.Email.ToLower()));
+            var foundedUser = users.Find(o => o.Email.ToLower() == dto.Email.ToLower());
 
-            var user = AppMapper.Map<UserDto>(result);
+            var user = AppMapper.Map<UserDto>(foundedUser);
 
             if (user != null)
             {

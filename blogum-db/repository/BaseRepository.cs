@@ -16,7 +16,9 @@ namespace blogum_db.repository
 
         public async Task<TEntity> Get(Expression<Func<TEntity, bool>> filter)
         {
-            var result = await Task.Run(() => Connection.Get<TEntity>(filter));
+            // var result = await Task.Run(() => Connection.Get<TEntity>(filter));
+
+            var result = await Connection.GetAsync<TEntity>(filter);
 
             return result;
         }

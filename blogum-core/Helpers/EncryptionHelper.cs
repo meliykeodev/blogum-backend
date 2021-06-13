@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Text;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace blogum_core.Helpers
@@ -34,6 +35,31 @@ namespace blogum_core.Helpers
                 numBytesRequested: 256 / 8));
 
             return hashed;
+        }
+
+        /// <summary>
+        /// Generate MD5 encrypt string
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string MD5Hash(string text)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+
+            //metnin boyutuna göre hash hesaplar
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+
+            //hesapladıktan sonra hashi alır
+            byte[] result = md5.Hash;
+
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                //her baytı 2 hexadecimal hane olarak değiştirir
+                strBuilder.Append(result[i].ToString("x2"));
+            }
+
+            return strBuilder.ToString();
         }
     }
 }

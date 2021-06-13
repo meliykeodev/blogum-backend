@@ -23,5 +23,6 @@ namespace blogum_db.models
 
         public string Password { get; set; }
 
+        public Ranks Rank { get; set; }
     }
 }
