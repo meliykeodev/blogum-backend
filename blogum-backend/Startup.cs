@@ -45,6 +45,17 @@ namespace blogum_backend
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "blogum_backend", Version = "v1" });
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "DevAllowAll", builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +66,7 @@ namespace blogum_backend
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "blogum_backend v1"));
+                app.UseCors("DevAllowAll");
             }
 
             app.UseHttpsRedirection();

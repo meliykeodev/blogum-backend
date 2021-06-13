@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using blogum_core.Helpers;
 using blogum_db.dtos;
+using blogum_db.models;
 using blogum_db.repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,19 @@ namespace blogum_backend.Controllers
             var result = AppMapper.Map<List<CategoryDto>>(categories);
 
             return result;
+        }
+
+        [HttpPost]
+        [Route("")]
+        public async Task<CategoryDto> CreateCategory(CategoryDto dto)
+        {
+            var entity = AppMapper.Map<Category>(dto);
+
+            var categoryId = await _categoryRepository.Insert(entity);
+
+            dto.Id = categoryId;
+
+            return dto;
         }
     }
 }
