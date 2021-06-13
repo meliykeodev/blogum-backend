@@ -1,10 +1,15 @@
 ﻿using System;
+using blogum_core.enums;
+
 namespace blogum_backend
 {
-    public class MyAuth
+    public class MyAuth: Attribute
     {
-        public MyAuth()
+        public MyAuth(
+            Ranks rank
+            )
         {
+
         }
     }
 }
